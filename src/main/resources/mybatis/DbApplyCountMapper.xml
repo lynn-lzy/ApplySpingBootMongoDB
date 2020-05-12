@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fivefu.apply.mapper.DbApplyCountMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.fivefu.apply.entity.DbApplyCount">
+        <id column="id" property="id" />
+        <result column="applyName" property="applyName" />
+        <result column="applycount" property="applycount" />
+        <result column="tjtime" property="tjtime" />
+        <result column="createtime" property="createtime" />
+    </resultMap>
+    
+    <select id="fuwuzhanbi" resultMap="BaseResultMap">
+    	SELECT applyName,SUM(applycount) applycount FROM db_apply_count GROUP BY applyName
+    </select>
+    
+    <select id="leijifuwucount" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	SELECT SUM(applycount) FROM db_apply_count WHERE tjtime <![CDATA[ <= ]]> #{strtime}
+    </select>
+
+</mapper>
